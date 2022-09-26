@@ -5,17 +5,20 @@ import com.google.gson.annotations.SerializedName
 data class ArticlesItem(
 
 	@field:SerializedName("publishedAt")
-	val publishedAt: String? = null,
+	val publishedAt: String,
 
 	@field:SerializedName("author")
-	val author: String? = null,
+	val author: String,
 
 	@field:SerializedName("urlToImage")
-	val urlToImage: String? = null,
+	val urlToImage: String,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	val description: String,
 
 	@field:SerializedName("title")
-	val title: String? = null,
+	val title: String,
+
+	@field:SerializedName("url")
+	val url: String,
 )

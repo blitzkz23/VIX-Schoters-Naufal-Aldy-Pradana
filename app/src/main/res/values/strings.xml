@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Schoters Bacarita</string>
+    <string name="error_http">Kesalahan: Tidak bisa mendapatkan data dari internet, silahkan coba lagi nanti.</string>
+    <string name="error_io">Kesalahan: Tidak dapat mendapatkan data dari local, silahkan coba lagi nanti</string>
 </resources>
