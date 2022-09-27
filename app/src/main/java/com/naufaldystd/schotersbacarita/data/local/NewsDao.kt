@@ -1,10 +1,12 @@
 package com.naufaldystd.schotersbacarita.data.local
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import com.naufaldystd.schotersbacarita.data.local.entity.ArticleEntity
 import androidx.room.Query
 
+@Dao
 interface NewsDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)

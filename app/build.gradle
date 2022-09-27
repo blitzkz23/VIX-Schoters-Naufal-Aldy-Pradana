@@ -7,6 +7,17 @@ plugins {
     id 'com.google.devtools.ksp' version '1.6.10-1.0.2'
 }
 
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
+}
+
 android {
     compileSdk 32
 
@@ -30,6 +41,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -63,6 +75,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     // Compose dependencies
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
@@ -74,9 +87,9 @@ dependencies {
     implementation 'io.github.raamcosta.compose-destinations:core:1.1.2-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.1.2-beta'
 
-    //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.41"
+    //Dagger - Hilt, not upgraded to 2.4.2 because dependency error
+    implementation "com.google.dagger:hilt-android:2.40.5"
+    kapt "com.google.dagger:hilt-android-compiler:2.40.5"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
@@ -87,10 +100,10 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.3"
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
 
-    // Room
-    implementation "androidx.room:room-runtime:2.4.3"
-    kapt "androidx.room:room-compiler:2.4.3"
+    // Room, not upgraded to 2.4.3 because there is dependency error
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.4.3"
+    implementation "androidx.room:room-ktx:2.4.2"
 }

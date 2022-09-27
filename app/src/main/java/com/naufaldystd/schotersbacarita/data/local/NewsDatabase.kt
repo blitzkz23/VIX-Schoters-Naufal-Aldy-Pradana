@@ -6,7 +6,8 @@ import com.naufaldystd.schotersbacarita.data.local.entity.ArticleEntity
 
 @Database(
 	entities = [ArticleEntity::class],
-	version = 1
+	version = 1,
+	exportSchema = false
 )
 abstract class NewsDatabase : RoomDatabase() {
 	abstract val dao: NewsDao
