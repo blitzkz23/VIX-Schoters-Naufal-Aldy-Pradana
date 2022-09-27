@@ -11,11 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
 @Destination(start = true)
-fun NewsListScreen() {
+fun NewsListScreen(
+	navigator: DestinationsNavigator,
+) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
