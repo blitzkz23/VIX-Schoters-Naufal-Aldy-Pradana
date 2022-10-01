@@ -81,4 +81,19 @@ class ArticleRepositoryImpl @Inject constructor(
 			}
 		}
 	}
+
+	override suspend fun getBookmarkedArticle(): Resource<List<Article>> {
+		return try {
+			val bookmarkedEntities = dao.getBookmarkedArticle()
+			val bookMarkedArticle = bookmarkedEntities.map { article ->
+				article.toArticle()
+			}
+			Resource.Success(bookMarkedArticle)
+		} catch (e: IOException) {
+			e.printStackTrace()
+			Resource.Error(
+				message = "Error: Tidak berhasil membaca data."
+			)
+		}
+	}
 }

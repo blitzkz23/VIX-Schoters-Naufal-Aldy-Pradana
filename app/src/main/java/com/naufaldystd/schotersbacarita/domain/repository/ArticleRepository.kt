@@ -17,4 +17,6 @@ interface ArticleRepository {
 		fetchFromRemote: Boolean,
 		query: String
 	): Flow<Resource<List<Article>>>
+
+	suspend fun getBookmarkedArticle(): Resource<List<Article>>
 }

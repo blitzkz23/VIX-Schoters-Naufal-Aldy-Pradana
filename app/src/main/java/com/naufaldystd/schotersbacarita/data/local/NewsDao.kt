@@ -26,4 +26,7 @@ interface NewsDao {
 
 	@Query("DELETE FROM articleEntity")
 	suspend fun clearArticleList()
+
+	@Query("SELECT * FROM articleEntity WHERE isFavorite = 1")
+	suspend fun getBookmarkedArticle(): List<ArticleEntity>
 }
