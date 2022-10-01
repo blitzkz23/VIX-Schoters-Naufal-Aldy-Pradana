@@ -1,20 +1,21 @@
 package com.naufaldystd.schotersbacarita.presentation.news_list.composable
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Colors
-import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.naufaldystd.schotersbacarita.R
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListEvent
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -34,6 +35,24 @@ fun NewsListScreen(
 		modifier = Modifier
 			.fillMaxSize()
 	) {
+		TopAppBar(
+			title = { Text(text = "Schoters Bacarita") },
+			backgroundColor = Color.White,
+			actions = {
+				IconButton(onClick = { /*TODO*/ }) {
+					Icon(
+						painter = painterResource(id = R.drawable.ic_person),
+						contentDescription = "Profile"
+					)
+				}
+				IconButton(onClick = { /*TODO*/ }) {
+					Icon(
+						painter = painterResource(id = R.drawable.ic_bookmark),
+						contentDescription = "Bookmark"
+					)
+				}
+			}
+		)
 		OutlinedTextField(
 			value = state.searchQuery, onValueChange = {
 				viewModel.onEvent(NewsListEvent.OnSearchQueryChange(it))
@@ -44,20 +63,44 @@ fun NewsListScreen(
 				Text(text = "Cari berita di sini...")
 			}, maxLines = 1, singleLine = true
 		)
+		Text(
+			text = "Berita Panas",
+			fontWeight = FontWeight.Bold,
+			fontSize = 16.sp,
+			modifier = Modifier.padding(start = 16.dp)
+		)
+		LazyRow(modifier = Modifier.fillMaxWidth()) {
+			val items = state.featuredArticle
+			Log.d("Item featured", items.toString())
+			items(items.size) { index ->
+				val featuredArticle = items[index]
+				FeaturedNewsItem(
+					article = featuredArticle,
+					modifier = Modifier
+						.fillMaxWidth()
+						.padding(16.dp)
+				)
+			}
+		}
+		Text(
+			text = "Berita Terkini", fontWeight = FontWeight.Bold, fontSize = 16.sp,
+			modifier = Modifier.padding(start = 16.dp)
+		)
 		SwipeRefresh(state = swipeRefreshState, onRefresh = {
 			viewModel.onEvent(NewsListEvent.Refresh)
 		}) {
-			LazyColumn(modifier = Modifier.fillMaxSize()) {
-				items(state.articles.size) { index ->
-					val article = state.articles[index]
-					NewsItem(article = article, modifier = Modifier
-						.fillMaxWidth()
-						.padding(16.dp))
-					if(index < state.articles.size) {
-						Divider(modifier = Modifier.padding(
-							horizontal = 16.dp
-						))
-					}
+			LazyColumn(
+				modifier = Modifier
+					.fillMaxSize(),
+				contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+			) {
+				val items = state.articles.filter { !it.isFeatured }
+				items(items.size) { index ->
+					val article = items[index]
+					NewsItem(
+						article = article, modifier = Modifier
+							.fillMaxWidth()
+					)
 				}
 			}
 		}

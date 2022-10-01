@@ -8,13 +8,13 @@ data class ArticlesItem(
 	val publishedAt: String,
 
 	@field:SerializedName("author")
-	val author: String,
+	val author: String? = null,
 
 	@field:SerializedName("urlToImage")
-	val urlToImage: String,
+	val urlToImage: String? = null,
 
 	@field:SerializedName("description")
-	val description: String,
+	val description: String? = null,
 
 	@field:SerializedName("title")
 	val title: String,

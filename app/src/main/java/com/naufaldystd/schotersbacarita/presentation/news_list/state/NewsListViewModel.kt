@@ -10,7 +10,6 @@ import com.naufaldystd.schotersbacarita.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,6 +62,15 @@ class NewsListViewModel @Inject constructor(private val repository: ArticleRepos
 					when (result) {
 						is Resource.Success -> {
 							result.data?.let { articles ->
+								// The first three result will become featured
+								articles.forEachIndexed { index, article ->
+									if (index < 3) {
+										article.isFeatured = true
+										state = state.copy(
+											featuredArticle = articles.filter { it.isFeatured }
+										)
+									}
+								}
 								state = state.copy(
 									articles = articles
 								)

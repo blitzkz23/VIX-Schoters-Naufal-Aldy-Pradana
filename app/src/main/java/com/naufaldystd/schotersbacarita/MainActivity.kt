@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.naufaldystd.schotersbacarita.presentation.news_list.composable.NavGraphs
+import com.naufaldystd.schotersbacarita.ui.theme.BackgroundWhite
 import com.naufaldystd.schotersbacarita.ui.theme.SchotersBacaritaTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
 				// A surface container using the 'background' color from the theme
 				Surface(
 					modifier = Modifier.fillMaxSize(),
-					color = MaterialTheme.colors.background
+					color = BackgroundWhite
 				) {
 					DestinationsNavHost(navGraph = NavGraphs.root)
 				}
