@@ -21,7 +21,28 @@ class BookmarkedNewsViewModel @Inject constructor(private val repository: Articl
 	var state by mutableStateOf(BookmarkedNewsState())
 
 	init {
-//		getArticles()
+		getBookmarkedArticles()
+	}
+
+	private fun getBookmarkedArticles() {
+		viewModelScope.launch {
+			when (val result = repository.getBookmarkedArticle()) {
+				is Resource.Success -> {
+					result.data?.let { articles ->
+						state = state.copy(
+							bookmarkedArticles = articles
+						)
+					}
+				}
+				is Resource.Error -> {
+					state = state.copy(
+						bookmarkedArticles = emptyList(),
+						error = "Error: Tidak dapat membaca data."
+					)
+				}
+				else -> Unit
+			}
+		}
 	}
 
 }

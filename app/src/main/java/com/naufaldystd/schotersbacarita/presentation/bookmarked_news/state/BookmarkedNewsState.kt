@@ -4,5 +4,5 @@ import com.naufaldystd.schotersbacarita.domain.model.Article
 
 data class BookmarkedNewsState(
 	val bookmarkedArticles: List<Article> = emptyList(),
-	val isRefreshing: Boolean = false,
+	val error: String? = null
 )

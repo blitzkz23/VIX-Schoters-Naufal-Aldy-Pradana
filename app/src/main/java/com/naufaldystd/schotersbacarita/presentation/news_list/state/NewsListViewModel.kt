@@ -67,12 +67,16 @@ class NewsListViewModel @Inject constructor(private val repository: ArticleRepos
 									if (index < 3) {
 										article.isFeatured = true
 										state = state.copy(
-											featuredArticle = articles.filter { it.isFeatured }
+											featuredArticle = articles.filter { it.isFeatured },
+											isLoading = false,
+											error = null
 										)
 									}
 								}
 								state = state.copy(
-									articles = articles
+									articles = articles,
+									isLoading = false,
+									error = null
 								)
 							}
 						}
