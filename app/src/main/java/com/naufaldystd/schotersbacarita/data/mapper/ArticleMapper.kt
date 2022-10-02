@@ -30,6 +30,7 @@ fun ArticlesItem.toArticleEntities(): ArticleEntity =
  */
 fun ArticleEntity.toArticle(): Article {
 	return Article(
+		id = id ?: 0,
 		title = title,
 		author = author ?: "Penulis Anon",
 		description = description ?: "Artikel ini tidak memiliki deskripsi",
@@ -48,6 +49,7 @@ fun ArticleEntity.toArticle(): Article {
  */
 fun Article.toArticleEntity(): ArticleEntity {
 	return ArticleEntity(
+		id = id,
 		title = title,
 		author = author,
 		description = description,

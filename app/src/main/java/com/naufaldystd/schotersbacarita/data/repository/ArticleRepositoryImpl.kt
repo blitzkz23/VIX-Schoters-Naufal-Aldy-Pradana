@@ -5,9 +5,11 @@ import com.naufaldystd.schotersbacarita.R
 import com.naufaldystd.schotersbacarita.data.local.NewsDatabase
 import com.naufaldystd.schotersbacarita.data.mapper.toArticle
 import com.naufaldystd.schotersbacarita.data.mapper.toArticleEntities
+import com.naufaldystd.schotersbacarita.data.mapper.toArticleEntity
 import com.naufaldystd.schotersbacarita.data.remote.NewsApi
 import com.naufaldystd.schotersbacarita.domain.model.Article
 import com.naufaldystd.schotersbacarita.domain.repository.ArticleRepository
+import com.naufaldystd.schotersbacarita.util.AppExecutors
 import com.naufaldystd.schotersbacarita.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +22,8 @@ import javax.inject.Singleton
 class ArticleRepositoryImpl @Inject constructor(
 	private val api: NewsApi,
 	private val db: NewsDatabase,
-	private val context: Context
+	private val context: Context,
+	private val appExecutors: AppExecutors
 ) : ArticleRepository {
 	private val dao = db.dao
 
@@ -89,6 +92,25 @@ class ArticleRepositoryImpl @Inject constructor(
 				article.toArticle()
 			}
 			Resource.Success(bookMarkedArticle)
+		} catch (e: IOException) {
+			e.printStackTrace()
+			Resource.Error(
+				message = "Error: Tidak berhasil membaca data."
+			)
+		}
+	}
+
+	override fun setBookmarkNews(article: Article, newState: Boolean) {
+		article.isFavorite = newState
+		val articleEntity = article.toArticleEntity()
+		appExecutors.diskIO().execute { dao.updateNewsData(articleEntity) }
+	}
+
+	override suspend fun getArticleById(id: Int): Resource<Article> {
+		return try {
+			val bookmarkedEntity = dao.getArticleById(id)
+			val bookmarkedArticle = bookmarkedEntity.toArticle()
+			Resource.Success(bookmarkedArticle)
 		} catch (e: IOException) {
 			e.printStackTrace()
 			Resource.Error(

@@ -36,7 +36,7 @@ fun NewsListScreen(
 	val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = viewModel.state.isRefreshing)
 	val state = viewModel.state
 
-	if (state.error == null && state.searchQuery == "") {
+	if (state.error == null) {
 		Column(
 			modifier = Modifier
 				.fillMaxSize()

@@ -19,4 +19,8 @@ interface ArticleRepository {
 	): Flow<Resource<List<Article>>>
 
 	suspend fun getBookmarkedArticle(): Resource<List<Article>>
+
+	fun setBookmarkNews(article: Article, newState: Boolean)
+
+	suspend fun getArticleById(id: Int): Resource<Article>
 }

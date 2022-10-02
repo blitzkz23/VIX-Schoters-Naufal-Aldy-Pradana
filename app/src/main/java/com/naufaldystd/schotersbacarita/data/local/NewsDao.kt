@@ -1,10 +1,7 @@
 package com.naufaldystd.schotersbacarita.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.*
 import com.naufaldystd.schotersbacarita.data.local.entity.ArticleEntity
-import androidx.room.Query
 
 @Dao
 interface NewsDao {
@@ -29,4 +26,10 @@ interface NewsDao {
 
 	@Query("SELECT * FROM articleEntity WHERE isFavorite = 1")
 	suspend fun getBookmarkedArticle(): List<ArticleEntity>
+
+	@Update
+	fun updateNewsData(article: ArticleEntity)
+
+	@Query("SELECT * FROM articleEntity WHERE id =:id")
+	suspend fun getArticleById(id: Int): ArticleEntity
 }
