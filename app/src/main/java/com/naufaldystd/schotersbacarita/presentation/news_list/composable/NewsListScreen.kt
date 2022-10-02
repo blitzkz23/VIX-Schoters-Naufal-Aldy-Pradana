@@ -1,6 +1,7 @@
 package com.naufaldystd.schotersbacarita.presentation.news_list.composable
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,6 +20,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.naufaldystd.schotersbacarita.R
 import com.naufaldystd.schotersbacarita.presentation.destinations.BookmarkedNewsScreenDestination
+import com.naufaldystd.schotersbacarita.presentation.destinations.NewsDetailScreenDestination
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListEvent
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -39,7 +42,7 @@ fun NewsListScreen(
 				.fillMaxSize()
 		) {
 			TopAppBar(
-				title = { Text(text = "Schoters Bacarita") },
+				title = { Text(text = stringResource(R.string.app_title)) },
 				backgroundColor = Color.White,
 				actions = {
 					IconButton(onClick = {
@@ -47,7 +50,7 @@ fun NewsListScreen(
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_person),
-							contentDescription = "Profile"
+							contentDescription = stringResource(R.string.profile)
 						)
 					}
 					IconButton(onClick = {
@@ -57,7 +60,7 @@ fun NewsListScreen(
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_bookmark),
-							contentDescription = "Bookmark"
+							contentDescription = stringResource(R.string.bookmark),
 						)
 					}
 				}
@@ -69,18 +72,17 @@ fun NewsListScreen(
 					.fillMaxWidth()
 					.padding(16.dp),
 				placeholder = {
-					Text(text = "Cari berita di sini...")
+					Text(text = stringResource(R.string.search_plaeholder))
 				}, maxLines = 1, singleLine = true
 			)
 			Text(
-				text = "Berita Panas",
+				text = stringResource(R.string.headline_hot_news),
 				fontWeight = FontWeight.Bold,
 				fontSize = 16.sp,
 				modifier = Modifier.padding(start = 16.dp)
 			)
 			LazyRow(modifier = Modifier.fillMaxWidth()) {
 				val items = state.featuredArticle
-				Log.d("Item featured", items.toString())
 				items(items.size) { index ->
 					val featuredArticle = items[index]
 					FeaturedNewsItem(
@@ -88,11 +90,16 @@ fun NewsListScreen(
 						modifier = Modifier
 							.fillMaxWidth()
 							.padding(16.dp)
+							.clickable {
+								navigator.navigate(
+									NewsDetailScreenDestination(featuredArticle.url, featuredArticle.title)
+								)
+							}
 					)
 				}
 			}
 			Text(
-				text = "Berita Terkini", fontWeight = FontWeight.Bold, fontSize = 16.sp,
+				text = stringResource(R.string.headline_current_news), fontWeight = FontWeight.Bold, fontSize = 16.sp,
 				modifier = Modifier.padding(start = 16.dp)
 			)
 			SwipeRefresh(state = swipeRefreshState, onRefresh = {
@@ -109,6 +116,11 @@ fun NewsListScreen(
 						NewsItem(
 							article = article, modifier = Modifier
 								.fillMaxWidth()
+								.clickable {
+									navigator.navigate(
+										NewsDetailScreenDestination(article.url, article.title)
+									)
+								}
 						)
 					}
 				}
