@@ -3,6 +3,7 @@ package com.naufaldystd.schotersbacarita.presentation.news_detail.composable
 import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
@@ -22,23 +23,34 @@ import com.naufaldystd.schotersbacarita.R
 import com.naufaldystd.schotersbacarita.domain.model.Article
 import com.naufaldystd.schotersbacarita.presentation.news_detail.state.NewsDetailViewModel
 import com.ramcosta.composedestinations.annotation.Destination
-import kotlinx.coroutines.launch
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 @Destination
 fun NewsDetailScreen(
 	article: Article,
+	navigator: DestinationsNavigator,
 	viewModel: NewsDetailViewModel = hiltViewModel()
 ) {
 	val state = viewModel.state
 	val context = LocalContext.current
-	val coroutineScope = rememberCoroutineScope()
+	rememberCoroutineScope()
 
 	Log.d("State of news", state.article.toString())
 	Column(modifier = Modifier.fillMaxSize()) {
 		TopAppBar(
 			title = { Text(text = context.getString(R.string.app_title)) },
 			backgroundColor = Color.White,
+			navigationIcon = {
+				IconButton(onClick = {
+					navigator.navigateUp()
+				}) {
+					Icon(
+						painter = painterResource(id = R.drawable.ic_back),
+						contentDescription = stringResource(R.string.back_icon)
+					)
+				}
+			},
 			actions = {
 				if (state.article?.isFavorite == true) {
 					IconButton(onClick = {
@@ -46,6 +58,12 @@ fun NewsDetailScreen(
 						var newBookmarkStatus = !bookmarkStatus!!
 
 						viewModel.setBookmarkNews(state.article, newBookmarkStatus)
+
+						Toast.makeText(
+							context,
+							context.getString(R.string.article_deleted),
+							Toast.LENGTH_SHORT
+						).show()
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_bookmark),
@@ -58,6 +76,12 @@ fun NewsDetailScreen(
 						var newBookmarkStatus = !bookmarkStatus!!
 						state.article?.isFavorite = false
 						state.article?.let { viewModel.setBookmarkNews(it, newBookmarkStatus) }
+
+						Toast.makeText(
+							context,
+							context.getString(R.string.article_saved),
+							Toast.LENGTH_SHORT
+						).show()
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_bookmark_border),

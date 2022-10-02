@@ -21,6 +21,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.naufaldystd.schotersbacarita.R
 import com.naufaldystd.schotersbacarita.presentation.destinations.BookmarkedNewsScreenDestination
 import com.naufaldystd.schotersbacarita.presentation.destinations.NewsDetailScreenDestination
+import com.naufaldystd.schotersbacarita.presentation.destinations.ProfileScreenDestination
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListEvent
 import com.naufaldystd.schotersbacarita.presentation.news_list.state.NewsListViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -46,7 +47,9 @@ fun NewsListScreen(
 				backgroundColor = Color.White,
 				actions = {
 					IconButton(onClick = {
-
+						navigator.navigate(
+							ProfileScreenDestination()
+						)
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_person),
@@ -99,7 +102,9 @@ fun NewsListScreen(
 				}
 			}
 			Text(
-				text = stringResource(R.string.headline_current_news), fontWeight = FontWeight.Bold, fontSize = 16.sp,
+				text = stringResource(R.string.headline_current_news),
+				fontWeight = FontWeight.Bold,
+				fontSize = 16.sp,
 				modifier = Modifier.padding(start = 16.dp)
 			)
 			SwipeRefresh(state = swipeRefreshState, onRefresh = {

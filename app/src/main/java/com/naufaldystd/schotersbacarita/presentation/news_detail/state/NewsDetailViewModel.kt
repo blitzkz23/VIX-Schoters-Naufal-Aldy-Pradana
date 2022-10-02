@@ -23,15 +23,6 @@ class NewsDetailViewModel @Inject constructor(
 	init {
 		viewModelScope.launch {
 			val articleArg = savedStateHandle.get<Article>("article") ?: return@launch
-//			when (val result = repository.getArticleById(articleArg.id)) {
-//				is Resource.Success -> {
-//					state = state.copy(
-//						article = result.data
-//					)
-//				}
-//				is Resource.Error -> Unit
-//				else -> Unit
-//			}
 			state = state.copy(
 				article = articleArg
 			)
