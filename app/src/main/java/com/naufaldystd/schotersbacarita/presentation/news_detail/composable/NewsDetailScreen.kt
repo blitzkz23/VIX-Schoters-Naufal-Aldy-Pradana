@@ -17,14 +17,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.naufaldystd.schotersbacarita.R
+import com.naufaldystd.schotersbacarita.domain.model.Article
 import com.naufaldystd.schotersbacarita.presentation.news_detail.state.NewsDetailViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
 @Destination
 fun NewsDetailScreen(
-	url: String,
-	title: String,
+	article: Article,
 	viewModel: NewsDetailViewModel = hiltViewModel()
 ) {
 	val state = viewModel.state
@@ -39,7 +39,7 @@ fun NewsDetailScreen(
 			WebView(context).apply {
 				webViewClient = WebViewClient()
 
-				state.url?.let { it1 -> loadUrl(it1) }
+				state.article?.let { it1 -> loadUrl(it1.url) }
 			}
 		})
 	}

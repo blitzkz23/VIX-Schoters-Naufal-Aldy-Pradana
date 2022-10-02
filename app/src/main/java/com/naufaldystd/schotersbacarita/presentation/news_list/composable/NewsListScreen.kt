@@ -59,7 +59,7 @@ fun NewsListScreen(
 						)
 					}) {
 						Icon(
-							painter = painterResource(id = R.drawable.ic_bookmark),
+							painter = painterResource(id = R.drawable.ic_bookmarks),
 							contentDescription = stringResource(R.string.bookmark),
 						)
 					}
@@ -92,7 +92,7 @@ fun NewsListScreen(
 							.padding(16.dp)
 							.clickable {
 								navigator.navigate(
-									NewsDetailScreenDestination(featuredArticle.url, featuredArticle.title)
+									NewsDetailScreenDestination(featuredArticle)
 								)
 							}
 					)
@@ -118,7 +118,7 @@ fun NewsListScreen(
 								.fillMaxWidth()
 								.clickable {
 									navigator.navigate(
-										NewsDetailScreenDestination(article.url, article.title)
+										NewsDetailScreenDestination(article)
 									)
 								}
 						)
