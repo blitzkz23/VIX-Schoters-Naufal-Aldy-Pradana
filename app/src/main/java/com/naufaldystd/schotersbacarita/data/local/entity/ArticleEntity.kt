@@ -8,11 +8,12 @@ data class ArticleEntity(
 	@PrimaryKey
 	val id: Int? = null,
 	val title: String,
-	val author: String,
-	val description: String,
-	val urlToImage:String,
+	val author: String? = null,
+	val description: String? = null,
+	val urlToImage:String? = null,
 	val publishedAt: String,
 	val url: String,
-	val isFavorite : Boolean
+	val isFavorite : Boolean,
+	val isFeatured: Boolean
 
 )

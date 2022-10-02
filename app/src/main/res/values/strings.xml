@@ -2,4 +2,18 @@
     <string name="app_name">Schoters Bacarita</string>
     <string name="error_http">Kesalahan: Tidak bisa mendapatkan data dari internet, silahkan coba lagi nanti.</string>
     <string name="error_io">Kesalahan: Tidak dapat mendapatkan data dari local, silahkan coba lagi nanti</string>
+    <string name="app_title">Schoters Bacarita</string>
+    <string name="profile">Profile</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="search_plaeholder">Cari berita di sini…</string>
+    <string name="headline_hot_news">Berita Panas</string>
+    <string name="headline_current_news">Berita Terkini</string>
+    <string name="saved_news">Berita Tersimpan</string>
+    <string name="article_saved">Artikel telah disimpan</string>
+    <string name="article_deleted">Artikel telah dihapus dari daftar.</string>
+    <string name="photo_profile">My photo profile</string>
+    <string name="my_name">Naufal Aldy Pradana</string>
+    <string name="github_username">\@blitzkz23</string>
+    <string name="back_icon">Back Icon</string>
+    <string name="headline_profile">My Profile</string>
 </resources>
